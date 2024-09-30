@@ -1,0 +1,162 @@
+1. escrever o arquivo .cpp:
+    - diretiva #include add biblioteca <iostream> permite escrever coisa na linhad e comando
+    - std::cout indica que terá uma string de saída
+    - stf::endl coloca quebra de linha
+    - return 0; indica que tudo ocorreu corretamente
+
+2. compila e cria o executável com o comando g++ hello_world.cpp -o hello_world
+
+SINTAXE:
+    - int xxx; declara um inteiro
+    - std::out << ""; joga a string na linha de comando
+    - std::cin >> xxx; joga o que foi digitado na linha de comando na variavel xxx
+    - operações matemáticas normal com % retornando o resto
+    - operações lógicas normal 
+    - if (x > y) {} pode ou não ter chave -> sem chave = simples só 1 linha
+    - while (x < 10) {} executa tudo dentro das {} até sair do laço
+    - escopo delimitado pelas chaves, espaçamento por estilo
+    - for (int x = 2; x <=20; x += 2) {} x começa com 2, sendo incrementado por 2 a cada iteração, executado até x = 20
+    - using namespace std; no início do código tira a necessidade de declarar std antes do cout cin etc 
+    - do {etc} while (x != 0); igual ao while porém a execução de saída está no final da execução
+    - int sum(int x, int y) { return x + y; } declaração de função
+
+DECLARAÇÃO DE VALOR x REFERÊNCIA:
+    - valor: recebe uma cópia da variável, não afentando o valor original
+    - referêcia: recebe uma referência à veriável, sendo modificadas por alterações dentro do escopo da função
+
+PONTEIRO
+    - variável cujo conteúdo é um endereço de memória
+    "x aponta para y" -> x contém o endereço de memória da variável y
+    endereço: localização do PRIMEIRO BYTE ocupado pela variável
+    trabalhar com memória permite a criação de programas mais eficientes
+
+    SINTAXE:
+        tipo *ponteiro; ex: int* intPointer; 
+        o * indica que a variável é um ponteiro, int* a = int *a
+        antes de inicializar, seu conteúdo é undefined
+    
+    ALOCAÇÃO ESTÁTICA x DINÂMICA:
+        estática: em tempo de compilação
+            int alpha; inteiro alpha
+            int* intPointer; pointeiro de inteiro
+            intPointer = &alpha; intPointer aponta para o endereço de memória de alpha
+        dinâmica: em tempo de execução
+            elimina a necessidade de definir a priori o tamanho da memória
+            é possível aumentar ou diminuir o tamanho da memória utilizada em tempo de execução
+            operadores new e delete
+            sempre que alocar (new) é necessário desalocar (delete) para que não ocorra memory leak
+            int* intPointer;
+            intPointer = new int;
+            residem em locais diferentes de memória que var alocadas estaticamente
+            a região de memória não possui uma variável residindo, podendo apenas ser acessada pelo ponteiro
+            int anotherInt = *intPointer; -> recupera o valor da região de memória
+            *intPointer = 25; altera o conteúdo
+    
+    CUIDADO!
+        *intA = *intB; valor alocado em *intB é copiado para *intA
+        intA = intB; intA passa a apontar para a mesma região de memória de intB -> MEMORY LEAK !!
+        solução: delete intA; desaloca a memória antes de apontar para a nova região
+
+VETORES
+    maneira mais simples de estruturar um conjunto de dados
+    elementos deve ser o mesmo tipo
+    o tamanho do vetor deve ser fixado no momento da declaração
+    elementos ocupam regiões consecutivas na memória, garantindo alguma otimização
+
+    SINTAXE
+        int c[10]; declara o tipo e a quantidade de elementos
+        int c[10] = {14, 0, 13}; declara e inicializa os elementos
+        na memória os demais elementos serão inicializados com ZERO {14, 0, 13, 0, 0, 0, 0, 0, 0, 0}
+        c[5] = 30; {14, 0, 13, 0, 0, 30, 0, 0, 0, 0}
+        int c[] = {1, 2, 3}; o vetor tem o tamanho da lista
+    
+    ALOCAÇÃO DINÂMICA
+        aloca (new) e desaloca (delete) em tempo de execução
+        int* c = new int[NUM_ELEM]; aloca a quantidade de memória necessária para o vetor de tamanho NUM_ELEM
+        resto do código não muda
+        delete [] c; desaloca vetor
+    
+    declarar assi int* vetor ou assi int vetor[] dá no mesmo
+
+    CUIDADO: passar o vetor para uma função concede acesso ao endereço de memória, sendo possível alterar o valor que ali reside
+        solução: void etc(const int* b) {blablabla;} impede que os elementos do vetor sejam acessados
+
+ORIENTAÇÃO A OBJETO
+    CLASSE: encapsula atributos estáticos e comportamentos dinâmicos
+        - modelo usado para criar OBJETOS, também chamado de INSTÂNCIAS
+        - a comunicação com os objetos é feita pelo uso da interface pública do objetos
+        - a complexidade envolvida na realização de uma tarefa fica escondida dentro da classe
+
+    VANTAGEM: isolamento, alterações não afetam todo o sistema. Facilita a adição de novas funcionalidades
+        - separa a visão lógica da visão de implementação e da visão de aplicação
+    
+    DECLARAÇÃO
+    - a visão lógica de uma classe será criada em um arquivo de extensão .h
+    - a implementação será feita em um arquivo .cpp
+    - o arquivo .cpp deve importar o arquivo .h através da declaração #include
+    - para evitar importar uma classe que já está sendo importada dentro de outra, utiliza-se as diretivas 
+    #ifndef (se não definido), #define (define um nome para evitar dupla inclusão), #endif
+
+PILHA: execuções no topo da pilha -> first in last out // last in first out
+    APLICAÇÃO: 
+        - alinhamento de processo; 
+        - chamada de função na execução de programas;
+
+FILA: inclusões no fim da fila, remoções no início da fila -> first in first out // last in last out 
+    APLICAÇÃO:garantir que os processos serão executados de maneira justa
+    IDEIA -     IMPLEMENTAÇÃO CIRCULAR: para garantir que isCheia retorna true apenas se TODOS os espaços de memória estiverem preenchidos
+
+LISTAS LINEARES
+    - estrutura de dados na qual cada elemento é precedido por um elemento e sucedido por outro (com exceção do primeiro e do último)
+    - ordem nos elementos, que pode ser a ordem de inclusão
+    - pilhas e filas são exemplos de listas lineares
+    - em listas lineares sequenciais, a ordem lógica é a mesma da ordem física, ou seja, os elementos estão ordenanos na memória
+    - acesso em tempo constante, dado o índice, permite obter elementos em um veotr ordenado em tempo O(log(n)) com a busca binária
+
+    VANTAGENS: acesso em tempo constante
+    DESVANTAGEM: necessário alocar espaço suficiente para todos os elementos de uma só vez (caso falte espaço, necessário mover os elementos para outro espaço de memória)
+        - manter a ordem é oneroso, precisa fazer vários deslocamentos em caso de inserção/ remoção
+
+LISTAS ENCADEADAS
+    - lista linear onde a ordem lógica dos elementos é diferente da ordem física
+    - elementos estão espalhados na memória, onde cada elemento aponta para seu sucessor
+    - para encontrar um dado elemento, precisamos percorrer todos os elementos predecessores de um por um
+
+    VANTAGEM: número de elementos pode aumentar ou diminuir conforme necessidade
+        - não é necessário fazer deslocamentos na memória em caso de inserção/ remoção
+    DESVANTAGEM: não é possível acessar qualquer elemento em tempo constante, busca binária não faz sentido -> busca sequencial
+
+PILHA - LISTA ENCADEADA
+    - nó: contem os dados e o endereço do próximo elemento da pilha
+    - (ItemType, NodeType*)
+
+TABELA HASH
+    Motivação:
+        - busca sequencial executa em tempo O(n); busca binária executa em O(log(n)) mas exige ordenação
+        - seria possível uma busca mais rápida?
+    - table hash permite busca em tempo constante
+    - aplicação armazena e recupera eficientemente uma coleção de dados
+
+ÁRVORES
+    Conceitos: 
+        - conjunto de nós em que existe um nó raiz r que contém zero ou mais subárvores (que também são árvores) cujas raízes são ligadas diretamente a r
+        - não é uma estrutura linear, não há no máximo um sucessor por nó, ainda que hava no máximo 1 predecessor por nó
+        - Grau de um nó: número de subárvores do nó
+        - Nó folha: nó de grau 0 (não possui subárvores)
+        - Nó interno: nó de grau maior que 0 (possui subárvores)
+        - Descendentes: nós abaixo de um determinado nó
+        - Altura de um nó: comprimento do caminho mais longo entre o nó até uma folha
+        - Altura da árvore: aldura do nó raiz
+        - Profundidade de um nó: distância percorrida da raiz até o nó
+        - Árvore binária: árvore em que abaixo de cada nó existem no máximo duas subárvores
+
+ÁRVORE BINÁRIA DE BUSCA 
+    - árvore binária em que, a cada nó, todos os registros com chaves menores que a deste nó estão na subárvore da esquerdam etc
+    - inserções e remoções possuem número de comparações proporcional à alturea da árvore
+    PERCURSOS: percorrer os nós de maneira sistemática, visitando-os apenas uma vez
+        - Pré-ordem: raiz esquerda direita 
+        - Pós-ordem: esquerda direita raiz
+        - In-ordem: esquerda raiz direita
+
+    
+    
